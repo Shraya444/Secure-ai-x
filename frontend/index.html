@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>SecureAI X — AI-Assisted PHP Vulnerability Scanner</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+<div class="grain"></div>
+
+<!-- ============ NAV ============ -->
+<nav class="nav">
+  <a href="#home" class="brand">
+    <svg viewBox="0 0 24 24" width="22" height="22"><path d="M12 2L4 5v6c0 5 3.4 8.7 8 10 4.6-1.3 8-5 8-10V5l-8-3z" fill="none" stroke="#00e08a" stroke-width="1.6"/><path d="M9 12l2 2 4-4" stroke="#00e08a" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/></svg>
+    SECUREAI <span class="brand-x">X</span>
+  </a>
+  <div class="nav-links">
+    <a href="#home" class="nav-link active">Home</a>
+    <a href="#scanner" class="nav-link">Scanner</a>
+    <a href="#analytics" class="nav-link">Analytics</a>
+    <a href="#simulator" class="nav-link">Simulator</a>
+    <a href="#reports" class="nav-link">Reports</a>
+  </div>
+  <a href="#reports" class="btn-command">
+    <span class="dot-pulse"></span> Command Center
+  </a>
+</nav>
+
+<main>
+
+  <!-- ============ HOME ============ -->
+  <section id="home" class="section hero-section">
+    <div class="section-inner hero-inner">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="blink-dot"></span> scan.analyze.protect — status: online</div>
+        <h1 class="wordmark">SECUREAI <span class="x">X</span></h1>
+        <p class="tagline">AI-Powered Cybersecurity Vulnerability Analysis</p>
+        <p class="desc">
+          Next-generation static analysis for PHP. Upload source, watch it get
+          torn apart in real time, and get plain-English fixes, attack
+          simulations, and a shareable PDF report — before it ever ships.
+        </p>
+        <div class="hero-actions">
+          <a href="#scanner" class="btn btn-primary">
+            <svg viewBox="0 0 24 24" width="14" height="14"><path d="M5 3l14 9-14 9V3z" fill="currentColor"/></svg>
+            Launch Scanner
+          </a>
+          <button class="btn btn-ghost" id="btn-view-sample">Try a sample file</button>
+        </div>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <span class="stat-label">Security Score</span>
+            <span class="stat-num" id="stat-score">--/100</span>
+            <span class="stat-sub" id="stat-score-sub">awaiting scan</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Threats Detected</span>
+            <span class="stat-num" id="stat-findings">0</span>
+            <span class="stat-sub">active</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Risk Level</span>
+            <span class="stat-num" id="stat-risk">—</span>
+            <span class="stat-sub">protected</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">Scans Run</span>
+            <span class="stat-num" id="stat-scans">0</span>
+            <span class="stat-sub">this session</span>
+          </div>
+          <div class="stat-card">
+            <span class="stat-label">System Status</span>
+            <span class="stat-num status-ok" id="stat-api">checking</span>
+            <span class="stat-sub">API link</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- callouts around the 3D globe, echoing the reference art -->
+      <div class="hero-visual">
+        <div class="globe-label lbl-tl">SQLI_RISK</div>
+        <div class="globe-label lbl-ml">XSS_RISK</div>
+        <div class="globe-label lbl-bl">AUTH_RISK</div>
+        <div class="globe-label lbl-tr">CVE_FEED</div>
+        <div class="globe-label lbl-mr">OWASP_API</div>
+        <div class="globe-label lbl-br">THREAT_INTEL</div>
+      </div>
+    </div>
+
+    <div class="feature-row">
+      <a href="#scanner" class="feature-card">
+        <span class="feature-icon">◧</span>
+        <span class="feature-title">Vulnerability Scanner</span>
+        <span class="feature-desc">Upload PHP files and scan with a 9-class detection engine.</span>
+      </a>
+      <a href="#scanner" class="feature-card">
+        <span class="feature-icon">◈</span>
+        <span class="feature-title">AI Analyst</span>
+        <span class="feature-desc">Plain-English explanations and remediation for every finding.</span>
+      </a>
+      <a href="#simulator" class="feature-card">
+        <span class="feature-icon">⚔</span>
+        <span class="feature-title">Attack Simulator</span>
+        <span class="feature-desc">See exactly how each vulnerability could be exploited.</span>
+      </a>
+      <a href="#reports" class="feature-card">
+        <span class="feature-icon">▤</span>
+        <span class="feature-title">Reports</span>
+        <span class="feature-desc">Export a polished PDF security assessment on demand.</span>
+      </a>
+    </div>
+    <div class="scroll-cue">scroll to scan <span>↓</span></div>
+  </section>
+
+  <!-- ============ SCANNER ============ -->
+  <section id="scanner" class="section">
+    <div class="section-inner two-col">
+      <div class="col-text">
+        <div class="section-eyebrow">01 — scanner</div>
+        <h2>Tear the code apart.</h2>
+        <p class="section-sub">Paste PHP or drop a file. The engine reads it line by line, hunting for SQL injection, XSS, hardcoded secrets, insecure includes, weak crypto, deserialization, eval/exec, and missing CSRF tokens.</p>
+
+        <div class="glass-panel">
+          <div class="panel-row">
+            <span class="panel-label">SOURCE</span>
+            <label class="upload-btn">
+              <input type="file" id="file-input" accept=".php,.txt" hidden />
+              Choose file
+            </label>
+          </div>
+          <textarea id="code-input" spellcheck="false" placeholder="<?php&#10;// paste vulnerable PHP here, or click 'Try a sample file' up top&#10;"></textarea>
+          <div class="panel-row">
+            <span class="filename-badge" id="current-filename">snippet.php</span>
+            <button class="btn btn-primary" id="btn-run-scan">
+              <span class="run-icon">▶</span> Run Scan
+            </button>
+          </div>
+        </div>
+
+        <div class="mini-console" id="mini-console">
+          <div class="console-line">$ waiting for input…</div>
+        </div>
+      </div>
+
+      <div class="col-results">
+        <div class="glass-panel results-panel">
+          <div class="panel-row">
+            <span class="panel-label">PROBLEMS</span>
+            <span class="score-pill" id="score-pill">SCORE —</span>
+          </div>
+          <div id="results-empty" class="empty-state">
+            No scan yet. Findings will appear here with line numbers, severity,
+            CWE reference, and a fix.
+          </div>
+          <div id="results-list" class="results-list"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ANALYTICS ============ -->
+  <section id="analytics" class="section">
+    <div class="section-inner two-col reverse">
+      <div class="col-text">
+        <div class="section-eyebrow">02 — analytics</div>
+        <h2>Watch the risk take shape.</h2>
+        <p class="section-sub">Every finding rolls up into one measurable security posture — critical issues weighted heaviest, with diminishing penalties so one bad line doesn't drown the score.</p>
+
+        <div class="glass-panel gauge-panel">
+          <div class="gauge-wrap">
+            <svg viewBox="0 0 140 140" class="gauge-svg">
+              <circle cx="70" cy="70" r="60" class="gauge-track" />
+              <circle cx="70" cy="70" r="60" class="gauge-fill" id="gauge-fill" />
+            </svg>
+            <div class="gauge-center">
+              <span id="gauge-score">--</span>
+              <small>/ 100</small>
+            </div>
+          </div>
+          <div class="sev-breakdown" id="sev-breakdown">
+            <div class="sev-row"><span class="sev-dot sev-critical"></span> Critical <b id="cnt-critical">0</b></div>
+            <div class="sev-row"><span class="sev-dot sev-high"></span> High <b id="cnt-high">0</b></div>
+            <div class="sev-row"><span class="sev-dot sev-medium"></span> Medium <b id="cnt-medium">0</b></div>
+            <div class="sev-row"><span class="sev-dot sev-low"></span> Low <b id="cnt-low">0</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="col-visual-space"></div>
+    </div>
+  </section>
+
+  <!-- ============ SIMULATOR ============ -->
+  <section id="simulator" class="section">
+    <div class="section-inner">
+      <div class="section-eyebrow center">03 — attack simulator</div>
+      <h2 class="center">How it could be exploited.</h2>
+      <p class="section-sub center">Educational payloads and impact chains for every vulnerability class found — nothing here executes against a real target.</p>
+      <div id="sim-empty" class="empty-state center">Run a scan first — simulations generate per detected class.</div>
+      <div id="sim-list" class="sim-list"></div>
+    </div>
+  </section>
+
+  <!-- ============ REPORTS ============ -->
+  <section id="reports" class="section">
+    <div class="section-inner">
+      <div class="report-card glass-panel">
+        <div class="section-eyebrow">04 — reports</div>
+        <h2>Take it with you.</h2>
+        <p class="report-sub">Generate a polished, shareable PDF: score, findings, CWE references, and fixes — ready for a portfolio, an internship submission, or a client.</p>
+        <div id="report-summary" class="report-summary">Run a scan first to enable report export.</div>
+        <button class="btn btn-primary" id="btn-download-report" disabled>
+          <svg viewBox="0 0 24 24" width="14" height="14"><path d="M12 3v12m0 0l-4-4m4 4l4-4M4 21h16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download PDF Report
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>SECUREAI <span class="brand-x">X</span> — built for education &amp; portfolio use. Not a substitute for professional penetration testing.</div>
+      <div class="footer-stack">Python · FastAPI · Three.js · ReportLab</div>
+    </div>
+  </footer>
+
+</main>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="particles.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
